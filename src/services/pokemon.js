@@ -29,3 +29,11 @@ export async function fetchPokemonByName(pokemon) {
   const data = await resp.json();
   return data.results;
 }
+
+export async function fetchSearchedPokemon(pokemon, type) {
+  const resp = await fetch(
+    `https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${pokemon}&type=${type}`
+  );
+  const data = await resp.json();
+  return data.results;
+}

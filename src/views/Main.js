@@ -5,6 +5,7 @@ import {
   fetchPokemon,
   fetchPokemonByName,
   fetchPokemonType,
+  fetchSearchedPokemon,
   fetchSelectedPokemonType,
 } from '../services/pokemon';
 
@@ -27,20 +28,26 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
+    const fetchDataType = async () => {
+      const dataType = await fetchSelectedPokemonType(selectType);
+      setPokedex(dataType);
+    };
+    const fetchDataName = async () => {
+      const dataName = await fetchPokemonByName(searchBar);
+      setPokedex(dataName);
+    };
     const fetchData = async () => {
-      const data = await fetchSelectedPokemonType(selectType);
+      const data = await fetchSearchedPokemon(searchBar, selectType);
       setPokedex(data);
     };
-    fetchData();
-  }, [selectType]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchPokemonByName(searchBar);
-      setPokedex(data);
-    };
-    fetchData();
-  }, [searchBar]);
+    if (selectType && searchBar) {
+      fetchData();
+    } else if (searchBar) {
+      fetchDataName();
+    } else {
+      fetchDataType();
+    }
+  }, [selectType, searchBar]);
 
   return (
     <div>
