@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import TypeDropdown from '../components/TypeDropdown';
 import { fetchPokemon, fetchPokemonType } from '../services/pokemon';
 
 export default function Main() {
   const [pokedex, setPokedex] = useState([]);
+  const [type, setType] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchPokemon();
@@ -10,7 +12,7 @@ export default function Main() {
     };
     const fetchType = async () => {
       const data = await fetchPokemonType();
-      console.log(data);
+      setType(data);
     };
     fetchData();
     fetchType();
@@ -18,9 +20,12 @@ export default function Main() {
 
   return (
     <div>
+      <TypeDropdown {...{ type }} />
       {pokedex.map((pokemon) => (
         <div key={pokemon.id}>
-          <span>{pokemon.pokemon}</span>
+          <span>
+            {pokemon.pokemon} ({pokemon.type_1}) ({pokemon.type_2})
+          </span>
         </div>
       ))}
     </div>
