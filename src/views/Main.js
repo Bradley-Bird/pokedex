@@ -5,6 +5,7 @@ import { fetchPokemon, fetchPokemonType } from '../services/pokemon';
 export default function Main() {
   const [pokedex, setPokedex] = useState([]);
   const [type, setType] = useState([]);
+  const [selectType, setSelectType] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchPokemon();
@@ -20,7 +21,7 @@ export default function Main() {
 
   return (
     <div>
-      <TypeDropdown {...{ type }} />
+      <TypeDropdown {...{ type }} callback={setSelectType} />
       {pokedex.map((pokemon) => (
         <div key={pokemon.id}>
           <span>
