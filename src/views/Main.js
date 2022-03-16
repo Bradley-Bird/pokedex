@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import TypeDropdown from '../components/TypeDropdown';
-import { fetchPokemon, fetchPokemonType } from '../services/pokemon';
+import { fetchPokemon, fetchPokemonType, fetchSelectedPokemonType } from '../services/pokemon';
 
 export default function Main() {
   const [pokedex, setPokedex] = useState([]);
@@ -18,6 +18,14 @@ export default function Main() {
     fetchData();
     fetchType();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchSelectedPokemonType(selectType);
+      setPokedex(data);
+    };
+    fetchData();
+  }, [selectType]);
 
   return (
     <div>
