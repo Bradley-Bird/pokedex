@@ -1,14 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchPokemon } from '../services/pokemon';
 
 export default function Main() {
+  const [pokedex, setPokedex] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchPokemon();
-      console.log(data);
+      setPokedex(data);
     };
     fetchData();
   }, []);
 
-  return <div>Main</div>;
+  return (
+    <div>
+      {pokedex.map((pokemon) => (
+        <div key={pokemon.id}>
+          <span>{pokemon.pokemon}</span>
+        </div>
+      ))}
+    </div>
+  );
 }
