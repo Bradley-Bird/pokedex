@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import TypeDropdown from '../components/TypeDropdown';
+import Input from '../components/Input';
 import { fetchPokemon, fetchPokemonType, fetchSelectedPokemonType } from '../services/pokemon';
 
 export default function Main() {
   const [pokedex, setPokedex] = useState([]);
   const [type, setType] = useState([]);
   const [selectType, setSelectType] = useState('');
+  const [searchBar, setSearchBar] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchPokemon();
@@ -29,6 +31,7 @@ export default function Main() {
 
   return (
     <div>
+      <Input {...{ searchBar }} callback={setSearchBar} />
       <TypeDropdown {...{ type }} callback={setSelectType} />
       {pokedex.map((pokemon) => (
         <div key={pokemon.id}>
