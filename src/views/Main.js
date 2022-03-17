@@ -41,8 +41,13 @@ export default function Main() {
       }
     };
     const fetchDataName = async () => {
-      const dataName = await fetchPokemonByName(searchBar);
-      setPokedex(dataName);
+      if (selectType === 'All') {
+        const data = await fetchPokemon();
+        setPokedex(data);
+      } else {
+        const dataName = await fetchPokemonByName(searchBar);
+        setPokedex(dataName);
+      }
     };
     const fetchData = async () => {
       if (selectType === 'All') {
