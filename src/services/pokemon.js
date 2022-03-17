@@ -12,7 +12,9 @@ export async function fetchPokemonType() {
 
 export async function fetchSelectedPokemonType(type) {
   const params = new URLSearchParams();
-  params.set('type', type);
+  if (type !== 'All') {
+    params.set('type', type);
+  }
   const resp = await fetch(
     `https://pokedex-alchemy.herokuapp.com/api/pokedex?${params.toString()}`
   );
@@ -31,8 +33,13 @@ export async function fetchPokemonByName(pokemon) {
 }
 
 export async function fetchSearchedPokemon(pokemon, type) {
+  const params = new URLSearchParams();
+  params.set('pokemon', pokemon);
+  if (type !== 'All') {
+    params.set('type', type);
+  }
   const resp = await fetch(
-    `https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${pokemon}&type=${type}`
+    `https://pokedex-alchemy.herokuapp.com/api/pokedex?${params.toString()}`
   );
   const data = await resp.json();
   return data.results;

@@ -32,31 +32,16 @@ export default function Main() {
 
   useEffect(() => {
     const fetchDataType = async () => {
-      if (selectType === 'All') {
-        const data = await fetchPokemon();
-        setPokedex(data);
-      } else {
-        const dataType = await fetchSelectedPokemonType(selectType);
-        setPokedex(dataType);
-      }
+      const dataType = await fetchSelectedPokemonType(selectType);
+      setPokedex(dataType);
     };
     const fetchDataName = async () => {
-      if (selectType === 'All') {
-        const data = await fetchPokemon();
-        setPokedex(data);
-      } else {
-        const dataName = await fetchPokemonByName(searchBar);
-        setPokedex(dataName);
-      }
+      const dataName = await fetchPokemonByName(searchBar);
+      setPokedex(dataName);
     };
     const fetchData = async () => {
-      if (selectType === 'All') {
-        const data = await fetchPokemon();
-        setPokedex(data);
-      } else {
-        const data = await fetchSearchedPokemon(searchBar, selectType);
-        setPokedex(data);
-      }
+      const data = await fetchSearchedPokemon(searchBar, selectType);
+      setPokedex(data);
     };
     if (selectType && searchBar) {
       fetchData();
