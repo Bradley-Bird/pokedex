@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import TypeDropdown from '../components/TypeDropdown';
 import Input from '../components/Input';
+import PokeCard from '../components/PokeCard/PokeCard';
 import {
   fetchPokemon,
   fetchPokemonByName,
@@ -12,12 +13,14 @@ import {
 export default function Main() {
   const [pokedex, setPokedex] = useState([]);
   const [type, setType] = useState([]);
-  const [selectType, setSelectType] = useState('');
+  const [selectType, setSelectType] = useState('All');
   const [searchBar, setSearchBar] = useState('');
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchPokemon();
-      setPokedex(data);
+      if (selectType === 'All') {
+        const data = await fetchPokemon();
+        setPokedex(data);
+      }
     };
     const fetchType = async () => {
       const data = await fetchPokemonType();
@@ -25,20 +28,30 @@ export default function Main() {
     };
     fetchData();
     fetchType();
-  }, []);
+  }, [selectType]);
 
   useEffect(() => {
     const fetchDataType = async () => {
-      const dataType = await fetchSelectedPokemonType(selectType);
-      setPokedex(dataType);
+      if (selectType === 'All') {
+        const data = await fetchPokemon();
+        setPokedex(data);
+      } else {
+        const dataType = await fetchSelectedPokemonType(selectType);
+        setPokedex(dataType);
+      }
     };
     const fetchDataName = async () => {
       const dataName = await fetchPokemonByName(searchBar);
       setPokedex(dataName);
     };
     const fetchData = async () => {
-      const data = await fetchSearchedPokemon(searchBar, selectType);
-      setPokedex(data);
+      if (selectType === 'All') {
+        const data = await fetchPokemon();
+        setPokedex(data);
+      } else {
+        const data = await fetchSearchedPokemon(searchBar, selectType);
+        setPokedex(data);
+      }
     };
     if (selectType && searchBar) {
       fetchData();
@@ -54,11 +67,7 @@ export default function Main() {
       <Input {...{ searchBar }} callback={setSearchBar} />
       <TypeDropdown {...{ type }} callback={setSelectType} />
       {pokedex.map((pokemon) => (
-        <div key={pokemon.id}>
-          <span>
-            {pokemon.pokemon} ({pokemon.type_1}) ({pokemon.type_2})
-          </span>
-        </div>
+        <PokeCard key={pokemon.id} {...pokemon} />
       ))}
     </div>
   );
