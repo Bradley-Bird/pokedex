@@ -9,6 +9,7 @@ import {
   fetchPokemonType,
   fetchSearchedPokemon,
   fetchSelectedPokemonType,
+  FetchSortPokemon,
 } from '../services/pokemon';
 
 export default function Main() {
@@ -17,6 +18,7 @@ export default function Main() {
   const [selectType, setSelectType] = useState('All');
   const [searchBar, setSearchBar] = useState('');
   const [loading, setLoading] = useState(true);
+  const [Direction, setDirection] = useState('asc');
   useEffect(() => {
     const fetchData = async () => {
       if (selectType === 'All') {
@@ -59,10 +61,24 @@ export default function Main() {
     }
   }, [selectType, searchBar]);
 
-  if (loading) return <p>Loading...</p>;
+  // useEffect(() => {
+  //   return () => {
+  //     const fetchData = await FetchSortPokemon()
+  //   };
+  // }, [third]);
+
+  // if (loading) return <p>Loading...</p>;
 
   return (
     <div>
+      <div onChange={(e) => setDirection(e.target.value)}>
+        <input type="radio" value="asc" id="asc" name="sort" />
+        <label>Ascending</label>
+      </div>
+      <div onChange={(e) => setDirection(e.target.value)}>
+        <input type="radio" value="desc" name="sort" />
+        <label>Descending</label>
+      </div>
       <Input {...{ searchBar }} callback={setSearchBar} />
       <TypeDropdown {...{ type }} callback={setSelectType} />
       {pokedex.map((pokemon) => (
