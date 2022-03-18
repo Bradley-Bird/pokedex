@@ -9,8 +9,8 @@ import {
   fetchPokemonType,
   fetchSearchedPokemon,
   fetchSelectedPokemonType,
-  fetchSortPokemon,
 } from '../services/pokemon';
+import SortRadio from '../components/SortRadio';
 
 export default function Main() {
   const [pokedex, setPokedex] = useState([]);
@@ -66,14 +66,7 @@ export default function Main() {
 
   return (
     <div>
-      <div onChange={(e) => setDirection(e.target.value)}>
-        <input type="radio" value="asc" id="asc" name="sort" />
-        <label>Ascending</label>
-      </div>
-      <div onChange={(e) => setDirection(e.target.value)}>
-        <input type="radio" value="desc" name="sort" />
-        <label>Descending</label>
-      </div>
+      <SortRadio {...{ setDirection }} />
       <Input {...{ searchBar }} callback={setSearchBar} />
       <TypeDropdown {...{ type }} callback={setSelectType} />
       {pokedex.map((pokemon) => (
