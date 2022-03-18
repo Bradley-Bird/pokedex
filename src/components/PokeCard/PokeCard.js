@@ -43,8 +43,8 @@ export default function PokeCard({
     const sprk_pos = { backgroundPosition: `${px_spark}% ${py_spark}%;` };
     const opc = { opacity: `${p_opc / 100};` };
     // const tf = { tansform: `rotateX(${ty}deg) rotateY(${tx}deg)` };
-    setBeforeStyles(`${grad_pos}`);
-    setAfterStyles(`${sprk_pos} ${opc}`);
+    setBeforeStyles(grad_pos.backgroundPosition);
+    setAfterStyles(sprk_pos.backgroundPosition, opc.opacity);
   };
   return (
     <>
