@@ -44,3 +44,15 @@ export async function fetchSearchedPokemon(pokemon, type) {
   const data = await resp.json();
   return data.results;
 }
+
+export async function FetchSortPokemon(sort, direction) {
+  const params = new URLSearchParams();
+  params.set('sort', sort);
+  params.set('direction', direction);
+
+  const resp = await fetch(
+    `https://pokedex-alchemy.herokuapp.com/api/pokedex?${params.toString()}`
+  );
+  const data = await resp.json();
+  console.log(data.results);
+}

@@ -2,24 +2,18 @@ import { useState } from 'react';
 import './PokeCard.scss';
 import './PokeCard.css';
 import classNames from 'classnames';
+import styled from 'styled-components';
 
-export default function PokeCard({
-  pokemon,
-  type_1,
-  type_2,
-  url_image,
-  attack,
-  defense,
-}) {
-  // const [cssStyles, setCssStyles] = useState({});
+export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, defense }) {
+  const [cssStyles, setCssStyles] = useState({});
   const [beforeStyles, setBeforeStyles] = useState({});
   const [afterStyles, setAfterStyles] = useState({});
-  const [animatedState, setAnimatedState] = useState(false);
+  const [animatedState, setAnimatedState] = useState(true);
 
   const handleMove = (e) => {
     e.preventDefault();
     const pos = [e.nativeEvent.offsetX, e.nativeEvent.offsetY];
-    setAnimatedState(true);
+    setAnimatedState(false);
     // console.log(pos);
     //math for mouse position
     const l = pos[0];
@@ -35,24 +29,26 @@ export default function PokeCard({
     const px_spark = 50 + (px - 50) / 7;
     const py_spark = 50 + (py - 50) / 7;
     const p_opc = 20 + Math.abs(pa) * 1.5;
-    //commented out for ci
-    // const ty = ((tp - 50) / 2) * -1;
-    // const tx = ((lp - 50) / 1.5) * 0.5;
+
+    const ty = ((tp - 50) / 2) * -1;
+    const tx = ((lp - 50) / 1.5) * 0.5;
     //css to apply for active card
     const grad_pos = { backgroundPosition: `${lp}% ${tp}%;` };
     const sprk_pos = { backgroundPosition: `${px_spark}% ${py_spark}%;` };
     const opc = { opacity: `${p_opc / 100};` };
-    // const tf = { tansform: `rotateX(${ty}deg) rotateY(${tx}deg)` };
+    const tf = { transform: `rotateX(${ty}deg) rotateY(${tx}deg)` };
     setBeforeStyles(grad_pos.backgroundPosition);
     setAfterStyles(sprk_pos.backgroundPosition, opc.opacity);
+    setCssStyles(tf.transform);
   };
   return (
     <>
-      <div styles={beforeStyles}></div>
+      <div styles={`backgroundPosition:${beforeStyles}`}></div>
       <div
+        styles={`transform:${cssStyles}`}
         className={classNames({ pokeCard: true, animated: animatedState })}
         onMouseMove={(e) => handleMove(e)}
-        onMouseLeave={() => setAnimatedState(false)}
+        onMouseLeave={() => setTimeout(() => (setAnimatedState(true), 2500))}
       >
         <div className="ImgBox">
           <img className="img" src={url_image} />
@@ -65,7 +61,7 @@ export default function PokeCard({
           <p>Defense:{defense}</p>
         </div>
       </div>
-      <div styles={afterStyles}></div>
+      <div styles={`backgroundPosition:${afterStyles}`}></div>
     </>
   );
 }
