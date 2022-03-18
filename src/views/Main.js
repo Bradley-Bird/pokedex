@@ -9,7 +9,7 @@ import {
   fetchPokemonType,
   fetchSearchedPokemon,
   fetchSelectedPokemonType,
-  FetchSortPokemon,
+  fetchSortPokemon,
 } from '../services/pokemon';
 
 export default function Main() {
@@ -18,7 +18,7 @@ export default function Main() {
   const [selectType, setSelectType] = useState('All');
   const [searchBar, setSearchBar] = useState('');
   const [loading, setLoading] = useState(true);
-  const [Direction, setDirection] = useState('asc');
+  const [direction, setDirection] = useState('asc');
   useEffect(() => {
     const fetchData = async () => {
       if (selectType === 'All') {
@@ -47,27 +47,22 @@ export default function Main() {
       setPokedex(dataName);
       setLoading(false);
     };
+    const sort = 'pokemon';
     const fetchData = async () => {
-      const data = await fetchSearchedPokemon(searchBar, selectType);
+      const data = await fetchSearchedPokemon(searchBar, selectType, direction, sort);
       setPokedex(data);
       setLoading(false);
     };
-    if (selectType && searchBar) {
+    if ((selectType && searchBar) || (selectType && direction)) {
       fetchData();
     } else if (searchBar) {
       fetchDataName();
     } else {
       fetchDataType();
     }
-  }, [selectType, searchBar]);
+  }, [selectType, searchBar, direction]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     const fetchData = await FetchSortPokemon()
-  //   };
-  // }, [third]);
-
-  // if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div>

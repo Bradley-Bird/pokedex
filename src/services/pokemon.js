@@ -32,12 +32,15 @@ export async function fetchPokemonByName(pokemon) {
   return data.results;
 }
 
-export async function fetchSearchedPokemon(pokemon, type) {
+export async function fetchSearchedPokemon(pokemon, type, direction, sort) {
   const params = new URLSearchParams();
+  params.set('direction', direction);
+  params.set('sort', sort);
   params.set('pokemon', pokemon);
   if (type !== 'All') {
     params.set('type', type);
   }
+
   const resp = await fetch(
     `https://pokedex-alchemy.herokuapp.com/api/pokedex?${params.toString()}`
   );
@@ -45,7 +48,7 @@ export async function fetchSearchedPokemon(pokemon, type) {
   return data.results;
 }
 
-export async function FetchSortPokemon(sort, direction) {
+export async function fetchSortPokemon(direction, sort) {
   const params = new URLSearchParams();
   params.set('sort', sort);
   params.set('direction', direction);
@@ -54,5 +57,5 @@ export async function FetchSortPokemon(sort, direction) {
     `https://pokedex-alchemy.herokuapp.com/api/pokedex?${params.toString()}`
   );
   const data = await resp.json();
-  console.log(data.results);
+  return data.results;
 }
