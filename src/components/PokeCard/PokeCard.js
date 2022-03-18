@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './PokeCard.scss';
 import './PokeCard.css';
 import classNames from 'classnames';
-import styled from 'styled-components';
+import { css } from '@emotion/react';
 
 export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, defense }) {
   const [cssStyles, setCssStyles] = useState({});
@@ -37,19 +37,19 @@ export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, d
     const sprk_pos = { backgroundPosition: `${px_spark}% ${py_spark}%;` };
     const opc = { opacity: `${p_opc / 100};` };
     const tf = { transform: `rotateX(${ty}deg) rotateY(${tx}deg)` };
-    setBeforeStyles(grad_pos.backgroundPosition);
-    setAfterStyles(sprk_pos.backgroundPosition, opc.opacity);
-    setCssStyles(tf.transform);
+    setBeforeStyles(grad_pos);
+    setAfterStyles(sprk_pos, opc);
+    setCssStyles(tf);
   };
   return (
-    <>
-      <div styles={`backgroundPosition:${beforeStyles}`}></div>
+    <div className="cards">
       <div
-        styles={`transform:${cssStyles}`}
+        style={cssStyles}
         className={classNames({ pokeCard: true, animated: animatedState })}
         onMouseMove={(e) => handleMove(e)}
         onMouseLeave={() => setTimeout(() => (setAnimatedState(true), 2500))}
       >
+        <div className="before" style={beforeStyles}></div>
         <div className="ImgBox">
           <img className="img" src={url_image} />
         </div>
@@ -60,8 +60,8 @@ export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, d
           <p>Attack:{attack}</p>
           <p>Defense:{defense}</p>
         </div>
+        <div className="after" style={afterStyles}></div>
       </div>
-      <div styles={`backgroundPosition:${afterStyles}`}></div>
-    </>
+    </div>
   );
 }
