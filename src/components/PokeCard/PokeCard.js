@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './PokeCard.scss';
 import './PokeCard.css';
 import classNames from 'classnames';
-import { css } from '@emotion/react';
 
 export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, defense }) {
   const [cssStyles, setCssStyles] = useState({});
