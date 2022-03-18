@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import TypeDropdown from '../components/TypeDropdown';
 import Input from '../components/Input';
 import PokeCard from '../components/PokeCard/PokeCard';
-import classNames from 'classnames';
+
 import {
   fetchPokemon,
   fetchPokemonByName,

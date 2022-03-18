@@ -10,9 +10,8 @@ export default function PokeCard({
   url_image,
   attack,
   defense,
-  className,
 }) {
-  const [cssStyles, setCssStyles] = useState({});
+  // const [cssStyles, setCssStyles] = useState({});
   const [beforeStyles, setBeforeStyles] = useState({});
   const [afterStyles, setAfterStyles] = useState({});
   const [animatedState, setAnimatedState] = useState(false);
@@ -36,13 +35,14 @@ export default function PokeCard({
     const px_spark = 50 + (px - 50) / 7;
     const py_spark = 50 + (py - 50) / 7;
     const p_opc = 20 + Math.abs(pa) * 1.5;
-    const ty = ((tp - 50) / 2) * -1;
-    const tx = ((lp - 50) / 1.5) * 0.5;
+    //commented out for ci
+    // const ty = ((tp - 50) / 2) * -1;
+    // const tx = ((lp - 50) / 1.5) * 0.5;
     //css to apply for active card
     const grad_pos = { backgroundPosition: `${lp}% ${tp}%;` };
     const sprk_pos = { backgroundPosition: `${px_spark}% ${py_spark}%;` };
     const opc = { opacity: `${p_opc / 100};` };
-    const tf = { tansform: `rotateX(${ty}deg) rotateY(${tx}deg)` };
+    // const tf = { tansform: `rotateX(${ty}deg) rotateY(${tx}deg)` };
     setBeforeStyles(`${grad_pos}`);
     setAfterStyles(`${sprk_pos} ${opc}`);
   };
@@ -51,7 +51,6 @@ export default function PokeCard({
       <div styles={beforeStyles}></div>
       <div
         className={classNames({ pokeCard: true, animated: animatedState })}
-        style={cssStyles}
         onMouseMove={(e) => handleMove(e)}
         onMouseLeave={() => setAnimatedState(false)}
       >
