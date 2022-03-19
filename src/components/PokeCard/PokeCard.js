@@ -2,6 +2,29 @@ import { useState } from 'react';
 import './PokeCard.scss';
 import './PokeCard.css';
 import classNames from 'classnames';
+// import styled from 'styled-components';
+
+//my attempt at using styled-components, just couldnt quite get the right syntax for the ::before
+// const pokeDiv = styled.div`
+// .pokeDiv::before {
+//   :background-position: {
+//     ${beforeStyles}
+//   }
+//   background-size: 300% 300%;
+//   background-image: linear-gradient(
+//     115deg,
+//     transparent 0%,
+//     var(--color1) 25%,
+//     transparent 47%,
+//     transparent 53%,
+//     var(--color2) 75%,
+//     transparent 100%
+//   );
+//   opacity: 0.5;
+//   filter: brightness(0.5) contrast(1);
+//   z-index: 1;
+// }
+// `;
 
 export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, defense }) {
   const [cssStyles, setCssStyles] = useState({});
@@ -40,15 +63,16 @@ export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, d
     setAfterStyles(sprk_pos, opc);
     setCssStyles(tf);
   };
+
   return (
-    <div className="cards">
+    <div className="card">
       <div
         style={cssStyles}
         className={classNames({ pokeCard: true, animated: animatedState })}
         onMouseMove={(e) => handleMove(e)}
         onMouseLeave={() => setTimeout(() => (setAnimatedState(true), 2500))}
       >
-        <div className="before" style={beforeStyles}></div>
+        <div style={beforeStyles} className="before"></div>
         <div className="ImgBox">
           <img className="img" src={url_image} />
         </div>
