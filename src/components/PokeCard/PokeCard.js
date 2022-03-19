@@ -2,29 +2,8 @@ import { useState } from 'react';
 import './PokeCard.scss';
 import './PokeCard.css';
 import classNames from 'classnames';
-// import styled from 'styled-components';
 
-//my attempt at using styled-components, just couldnt quite get the right syntax for the ::before
-// const pokeDiv = styled.div`
-// .pokeDiv::before {
-//   :background-position: {
-//     ${beforeStyles}
-//   }
-//   background-size: 300% 300%;
-//   background-image: linear-gradient(
-//     115deg,
-//     transparent 0%,
-//     var(--color1) 25%,
-//     transparent 47%,
-//     transparent 53%,
-//     var(--color2) 75%,
-//     transparent 100%
-//   );
-//   opacity: 0.5;
-//   filter: brightness(0.5) contrast(1);
-//   z-index: 1;
-// }
-// `;
+// my attempt at using styled-components, just couldnt quite get the right syntax for the ::before
 
 export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, defense }) {
   const [cssStyles, setCssStyles] = useState({});
@@ -66,7 +45,8 @@ export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, d
 
   return (
     <div className="card">
-      <div
+      <pokeDiv
+        {...{ beforeStyles }}
         style={cssStyles}
         className={classNames({ pokeCard: true, animated: animatedState })}
         onMouseMove={(e) => handleMove(e)}
@@ -84,7 +64,7 @@ export default function PokeCard({ pokemon, type_1, type_2, url_image, attack, d
           <p>Defense:{defense}</p>
         </div>
         <div className="after" style={afterStyles}></div>
-      </div>
+      </pokeDiv>
     </div>
   );
 }
